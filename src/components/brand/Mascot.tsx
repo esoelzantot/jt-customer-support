@@ -94,7 +94,7 @@ export function Mascot({ className, interactive = true }: MascotProps) {
       />
 
       {interactive && (
-        <p className="mt-3 text-center text-xs font-semibold tracking-wide text-brand-700/70">{t('home.mascotHint')}</p>
+        <p className="mx-auto mt-3 w-fit rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-brand-700 shadow-card">{t('home.mascotHint')}</p>
       )}
     </div>
   )

@@ -2,39 +2,56 @@
 
 /*
  * J&T Express design tokens.
- * Brand red sampled from the official banner: #E51E25.
+ * Brand red measured from the official logo: #EC1C2A (H 356°, S 85%, L 52%).
+ * Contrast: white on brand-600 is 4.4:1 — fine for surfaces, buttons and bold/large text.
+ * Use brand-700 (5.9:1) for small red text on white.
  */
 @theme {
-  --color-brand-50: #fff1f1;
-  --color-brand-100: #ffdfe0;
-  --color-brand-200: #ffc5c7;
-  --color-brand-300: #ff9b9f;
-  --color-brand-400: #fb6168;
-  --color-brand-500: #f2333a;
-  --color-brand-600: #e51e25; /* primary */
-  --color-brand-700: #bd1218;
-  --color-brand-800: #9c1318;
-  --color-brand-900: #81171b;
-  --color-brand-950: #470609;
+  --color-brand-50: #fef2f3;
+  --color-brand-100: #fde3e5;
+  --color-brand-200: #fbcbcf;
+  --color-brand-300: #f7a1a8;
+  --color-brand-400: #f16874;
+  --color-brand-500: #ee3f4c;
+  --color-brand-600: #ec1c2a; /* logo red */
+  --color-brand-700: #c8101d;
+  --color-brand-800: #a5111c;
+  --color-brand-900: #88141d;
+  --color-brand-950: #4b050a;
 
-  --color-ink: #1a1214;
-  --color-cream: #fff8f3;
+  /* Warm neutrals: keep the red as the only loud colour. */
+  --color-ink: #17120f;
+  --color-ink-700: #3f3836;
+  --color-ink-500: #736a67;
+  --color-ink-300: #bdb5b2;
+  --color-line: #ebe6e3;
+  --color-cream: #f7f5f3; /* page background */
   --color-blush: #ffd6dc; /* mascot cheeks */
-  --color-denim: #6f8fc4; /* mascot jeans, sparing accent */
 
-  --font-sans: 'Cairo', 'Poppins', system-ui, sans-serif;
-  --font-display: 'Poppins', 'Cairo', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Arabic', 'Poppins', system-ui, sans-serif;
+  --font-display: 'Poppins', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(23 18 15 / 0.04), 0 8px 24px -12px rgb(23 18 15 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(23 18 15 / 0.04), 0 24px 48px -20px rgb(136 20 29 / 0.28);
+  --shadow-brand: 0 12px 32px -12px rgb(236 28 42 / 0.55);
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
   --animate-float: float 6s ease-in-out infinite;
-  --animate-marquee: marquee 28s linear infinite;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-flash: flash 1.8s var(--ease-out-expo);
 
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
+    50% { transform: translateY(-12px); }
   }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+  @keyframes flash {
+    0%, 40% { box-shadow: 0 0 0 4px rgb(236 28 42 / 0.45); }
+    100% { box-shadow: 0 0 0 4px rgb(236 28 42 / 0); }
   }
 }
 
@@ -42,6 +59,7 @@
   html {
     -webkit-tap-highlight-color: transparent;
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-cream font-sans text-ink antialiased;
@@ -60,7 +78,7 @@
   display: block;
   width: 100%;
   border-radius: 0.875rem;
-  border: 2px solid rgb(26 18 20 / 0.1);
+  border: 1.5px solid var(--color-line);
   background: #fff;
   padding: 0.625rem 0.875rem;
   font: inherit;
@@ -68,12 +86,12 @@
   resize: vertical;
   transition: border-color 150ms, box-shadow 150ms;
   &::placeholder {
-    color: rgb(26 18 20 / 0.35);
+    color: var(--color-ink-300);
   }
   &:focus {
     outline: none;
     border-color: var(--color-brand-600);
-    box-shadow: 0 0 0 4px rgb(229 30 37 / 0.12);
+    box-shadow: 0 0 0 4px rgb(236 28 42 / 0.12);
   }
 }
 
@@ -81,17 +99,25 @@
 @utility text-display {
   font-family: var(--font-display);
   font-style: italic;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: -0.02em;
   &:lang(ar) {
     font-family: var(--font-sans);
     font-style: normal;
+    font-weight: 700;
     letter-spacing: 0;
   }
 }
 
+/* The logo's forward-motion streaks, as a texture. */
 @utility bg-speed-lines {
-  background-image: repeating-linear-gradient(-12deg, transparent 0 22px, rgb(255 255 255 / 0.08) 22px 24px);
+  background-image: repeating-linear-gradient(-14deg, transparent 0 26px, rgb(255 255 255 / 0.07) 26px 28px);
+}
+
+/* Fine dotted grid for neutral surfaces. */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(23 18 15 / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 @media (prefers-reduced-motion: reduce) {

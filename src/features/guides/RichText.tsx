@@ -71,7 +71,7 @@ export function RichText({ text, className }: { text?: string; className?: strin
   }
 
   return (
-    <div className={clsx('space-y-2 leading-7', className)} dir="auto">
+    <div className={clsx('space-y-2', className ?? 'leading-7')} dir="auto">
       {blocks.map((b, i) =>
         b.type === 'p' ? (
           <p key={i}>
@@ -85,7 +85,7 @@ export function RichText({ text, className }: { text?: string; className?: strin
           <ul key={i} className="space-y-2">
             {b.lines.map((l, j) => (
               <li key={j} className="flex gap-2.5">
-                <span aria-hidden className="mt-2.5 size-1.5 shrink-0 rounded-full bg-brand-600" />
+                <span aria-hidden className="mt-[0.75em] size-1.5 shrink-0 rounded-full bg-brand-600" />
                 <span className="min-w-0 flex-1">
                   <Line text={l} k={`${i}-${j}`} />
                 </span>

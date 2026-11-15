@@ -6,71 +6,72 @@ import type { TicketCategory, TicketSubtype } from '@/features/guides/types'
 import { useLocalized } from '@/features/guides/useLocalized'
 import { TicketCard } from './TicketCard'
 
-type Props = { category: TicketCategory; number: number; subtypes: TicketSubtype[]; query: string }
+type Props = { category: TicketCategory; number: number; subtypes: TicketSubtype[]; query: string; flashId: string | null }
 
-export function CategoryBlock({ category, number, subtypes, query }: Props) {
+export function CategoryBlock({ category, number, subtypes, query, flashId }: Props) {
   const { t } = useTranslation()
   const l = useLocalized()
   const title = l(category.title)
   const latin = isLatin(title)
   const rules = category.rules ?? []
+  const num = String(number).padStart(2, '0')
 
   return (
     <motion.section
-      layout
+      layout="position"
       id={`cat-${category.id}`}
+      data-category={category.id}
       aria-labelledby={`cat-${category.id}-title`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="scroll-mt-40"
+      className="scroll-mt-28"
     >
       <motion.header
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-[2rem] bg-ink p-6 text-white sm:p-8"
+        className="relative"
       >
-        <div aria-hidden className="absolute -end-20 -top-24 size-72 rounded-full bg-brand-600/40 blur-3xl" />
-        <span aria-hidden className="text-display absolute -bottom-10 end-4 text-[9rem] leading-none text-white/[0.06]" dir="ltr">
-          {String(number).padStart(2, '0')}
-        </span>
-
-        <div className="relative flex flex-wrap items-start gap-5">
+        <div className="flex items-start gap-4 sm:gap-5">
           <motion.span
-            whileHover={{ rotate: -10, scale: 1.08 }}
-            className="grid size-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-3xl shadow-lg shadow-brand-950/40"
+            whileHover={{ rotate: -8, scale: 1.06 }}
+            className="relative grid size-14 shrink-0 place-items-center rounded-2xl bg-brand-600 text-2xl shadow-brand sm:size-16 sm:text-3xl"
           >
             <span aria-hidden>{category.icon ?? '🎫'}</span>
           </motion.span>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold tracking-wider text-brand-300">
-              {t('tickets.mainType')} · <span dir="ltr">{String(number).padStart(2, '0')}</span>
+            <p className="flex items-center gap-2 text-xs font-semibold text-ink-500">
+              <span className="text-display text-brand-600" dir="ltr" lang="en">{num}</span>
+              <span className="h-px w-6 bg-line" />
+              {t('tickets.mainType')}
+              <span className="rounded-full bg-white px-2 py-0.5 ring-1 ring-line">{t('tickets.subtypesCount', { count: subtypes.length })}</span>
             </p>
             <h2
               id={`cat-${category.id}-title`}
-              className={latin ? 'text-display mt-1 text-2xl sm:text-3xl rtl:text-right' : 'mt-1 text-2xl font-extrabold sm:text-3xl'}
+              className={latin ? 'text-display mt-1.5 text-2xl text-ink sm:text-3xl rtl:text-right' : 'mt-1.5 text-2xl font-bold sm:text-3xl'}
               dir={latin ? 'ltr' : undefined}
               lang={latin ? 'en' : undefined}
             >
               {title}
             </h2>
-            <RichText text={l(category.description)} className="mt-2 max-w-3xl text-white/75" />
+            <RichText text={l(category.description)} className="mt-2 max-w-3xl text-[1.0625rem] leading-8 text-ink-500 sm:text-lg" />
           </div>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-bold">{t('tickets.subtypesCount', { count: subtypes.length })}</span>
         </div>
 
         {rules.length > 0 && (
-          <div className="relative mt-6 rounded-2xl bg-white/[0.07] p-4 ring-1 ring-white/10">
-            <p className="text-sm font-extrabold text-brand-300">{t('tickets.rules')}</p>
-            <ol className="mt-3 grid gap-2 md:grid-cols-3">
+          <div className="relative mt-6 overflow-hidden rounded-3xl bg-ink p-5 text-white sm:p-6">
+            <div aria-hidden className="absolute -end-16 -top-20 size-56 rounded-full bg-brand-600/50 blur-3xl" />
+            <p className="relative flex items-center gap-2 text-sm font-semibold">
+              <span className="grid size-6 place-items-center rounded-full bg-brand-600 text-xs">!</span>
+              {t('tickets.rules')}
+            </p>
+            <ol className="relative mt-4 grid gap-3 md:grid-cols-3">
               {rules.map((rule, i) => (
-                <li key={i} className="flex gap-3 rounded-xl bg-white/5 p-3 text-sm">
-                  <span className="text-display grid size-6 shrink-0 place-items-center rounded-full bg-brand-600 text-xs" dir="ltr">
-                    {i + 1}
-                  </span>
-                  <RichText text={l(rule)} className="min-w-0 flex-1 leading-6" />
+                <li key={i} className="flex gap-3 rounded-2xl bg-white/[0.06] p-4 ring-1 ring-white/10">
+                  <span className="text-display text-brand-400" dir="ltr" lang="en">0{i + 1}</span>
+                  <RichText text={l(rule)} className="min-w-0 flex-1 text-base leading-7 text-white/90" />
                 </li>
               ))}
             </ol>
@@ -78,7 +79,7 @@ export function CategoryBlock({ category, number, subtypes, query }: Props) {
         )}
       </motion.header>
 
-      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+      <div className="mt-6 grid gap-5">
         <AnimatePresence initial={false}>
           {subtypes.map((s, i) => (
             <TicketCard
@@ -87,6 +88,7 @@ export function CategoryBlock({ category, number, subtypes, query }: Props) {
               code={`${number}.${category.subtypes.indexOf(s) + 1}`}
               query={query}
               index={i}
+              flash={flashId === s.id}
             />
           ))}
         </AnimatePresence>

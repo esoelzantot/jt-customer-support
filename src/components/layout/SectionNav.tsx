@@ -1,9 +1,10 @@
+import { motion } from 'motion/react'
 import { NavLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { GUIDE_SECTIONS } from '@/features/guides/sections'
 
-export function SectionNav({ className }: { className?: string }) {
+export function SectionNav({ className, layoutKey = 'desktop' }: { className?: string; layoutKey?: string }) {
   const { t } = useTranslation()
 
   return (
@@ -15,13 +16,24 @@ export function SectionNav({ className }: { className?: string }) {
               to={`/guides/${slug}`}
               className={({ isActive }) =>
                 clsx(
-                  'flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-bold transition',
-                  isActive ? 'bg-brand-600 text-white shadow-md shadow-brand-600/25' : 'text-ink/70 hover:bg-brand-600/10 hover:text-brand-700',
+                  'relative flex items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-semibold transition-colors',
+                  isActive ? 'text-brand-700' : 'text-ink-500 hover:text-ink',
                 )
               }
             >
-              <Icon className="size-4" />
-              {t(`sections.${key}.title`)}
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <motion.span
+                      layoutId={`nav-pill-${layoutKey}`}
+                      className="absolute inset-0 rounded-full bg-brand-50 ring-1 ring-brand-100"
+                      transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <Icon className="relative size-4" />
+                  <span className="relative">{t(`sections.${key}.title`)}</span>
+                </>
+              )}
             </NavLink>
           </li>
         ))}

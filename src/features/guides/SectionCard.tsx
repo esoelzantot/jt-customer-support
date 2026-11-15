@@ -1,75 +1,77 @@
 import type { PointerEvent } from 'react'
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
+import { motion, useMotionTemplate, useMotionValue } from 'motion/react'
 import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import clsx from 'clsx'
 import type { GuideSection } from './sections'
 
 const MotionLink = motion.create(Link)
 
-/** Interactive hub card: 3D tilt + spotlight that follows the pointer. */
-export function SectionCard({ section, index }: { section: GuideSection; index: number }) {
+/** Bento card for a guide section. `featured` renders the large red variant. */
+export function SectionCard({ section, index, featured }: { section: GuideSection; index: number; featured?: boolean }) {
   const { t } = useTranslation()
-  const reduceMotion = useReducedMotion()
-  const { slug, key, Icon, accent } = section
-
+  const { slug, key, Icon } = section
   const mx = useMotionValue(50)
   const my = useMotionValue(50)
-  const rotateX = useSpring(0, { stiffness: 160, damping: 16 })
-  const rotateY = useSpring(0, { stiffness: 160, damping: 16 })
-  const spotlight = useMotionTemplate`radial-gradient(260px circle at ${mx}% ${my}%, rgb(255 255 255 / 0.22), transparent 70%)`
+  const spotlight = useMotionTemplate`radial-gradient(320px circle at ${mx}% ${my}%, ${featured ? 'rgb(255 255 255 / 0.18)' : 'rgb(236 28 42 / 0.08)'}, transparent 70%)`
 
   const onMove = (e: PointerEvent<HTMLAnchorElement>) => {
     const r = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - r.left) / r.width
-    const y = (e.clientY - r.top) / r.height
-    mx.set(x * 100)
-    my.set(y * 100)
-    if (!reduceMotion) {
-      rotateY.set((x - 0.5) * 10)
-      rotateX.set((0.5 - y) * 10)
-    }
-  }
-  const onLeave = () => {
-    rotateX.set(0)
-    rotateY.set(0)
+    mx.set(((e.clientX - r.left) / r.width) * 100)
+    my.set(((e.clientY - r.top) / r.height) * 100)
   }
 
   return (
     <motion.li
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ delay: index * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="[perspective:1000px]"
+      transition={{ delay: index * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className={clsx(featured && 'md:row-span-2')}
     >
       <MotionLink
         to={`/guides/${slug}`}
         onPointerMove={onMove}
-        onPointerLeave={onLeave}
-        style={{ rotateX, rotateY }}
-        whileTap={{ scale: 0.98 }}
-        className={`group relative flex h-full min-h-64 flex-col overflow-hidden rounded-[2rem] bg-gradient-to-br ${accent} p-7 text-white shadow-xl shadow-brand-900/20`}
+        whileHover={{ y: -6 }}
+        whileTap={{ scale: 0.985 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+        className={clsx(
+          'group relative flex h-full flex-col overflow-hidden rounded-[2rem] p-7 sm:p-8',
+          featured ? 'min-h-80 bg-brand-600 text-white shadow-brand' : 'min-h-56 bg-white text-ink shadow-card ring-1 ring-line hover:shadow-lift',
+        )}
       >
-        <div aria-hidden className="bg-speed-lines absolute inset-0 opacity-50" />
-        <motion.div aria-hidden className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: spotlight }} />
+        {featured && <div aria-hidden className="bg-speed-lines absolute inset-0" />}
+        <motion.div aria-hidden className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: spotlight }} />
 
-        <span aria-hidden className="text-display absolute -bottom-6 end-3 text-[8rem] leading-none text-white/10" dir="ltr">
-          0{index + 1}
-        </span>
+        <div className="relative flex items-start justify-between gap-4">
+          <span
+            className={clsx(
+              'grid size-14 place-items-center rounded-2xl transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-rotate-[8deg] group-hover:scale-110',
+              featured ? 'bg-white text-brand-600' : 'bg-brand-50 text-brand-600',
+            )}
+          >
+            <Icon className="size-7" />
+          </span>
+          <span className={clsx('text-display text-sm', featured ? 'text-white/60' : 'text-ink-300')} dir="ltr" lang="en">
+            0{index + 1}
+          </span>
+        </div>
 
-        <span className="relative grid size-14 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
-          <Icon className="size-8" />
-        </span>
-
-        <h3 className="relative mt-6 text-2xl font-extrabold">{t(`sections.${key}.title`)}</h3>
-        <p className="relative mt-2 text-white/85">{t(`sections.${key}.short`)}</p>
-
-        <span className="relative mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold">
-          {t('home.explore')}
-          <svg viewBox="0 0 24 24" className="size-4 transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </span>
+        <div className="relative mt-auto pt-10">
+          <h3 className={clsx('font-bold', featured ? 'text-3xl sm:text-4xl' : 'text-2xl')}>{t(`sections.${key}.title`)}</h3>
+          <p className={clsx('mt-2 max-w-md leading-7', featured ? 'text-white/85' : 'text-ink-500')}>{t(`sections.${key}.description`)}</p>
+          <span
+            className={clsx(
+              'mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors',
+              featured ? 'bg-white text-brand-700' : 'bg-cream text-ink group-hover:bg-brand-600 group-hover:text-white',
+            )}
+          >
+            {t('home.explore')}
+            <svg viewBox="0 0 24 24" className="size-4 transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </div>
       </MotionLink>
     </motion.li>
   )

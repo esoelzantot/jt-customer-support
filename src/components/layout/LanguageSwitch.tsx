@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import clsx from 'clsx'
 
-export function LanguageSwitch() {
+export function LanguageSwitch({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   const { t, i18n } = useTranslation()
   const next = i18n.resolvedLanguage === 'en' ? 'ar' : 'en'
 
@@ -9,7 +10,10 @@ export function LanguageSwitch() {
       type="button"
       onClick={() => i18n.changeLanguage(next)}
       lang={next}
-      className="rounded-full border-2 border-brand-600/20 px-4 py-1.5 text-sm font-bold text-brand-700 transition hover:border-brand-600 hover:bg-brand-600 hover:text-white"
+      className={clsx(
+        'rounded-full px-3 py-2 text-sm font-semibold transition',
+        tone === 'light' ? 'text-ink-500 hover:bg-white hover:text-ink' : 'text-white/80 hover:bg-white/10 hover:text-white',
+      )}
     >
       {t('lang.switch')}
     </button>

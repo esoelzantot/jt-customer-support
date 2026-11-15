@@ -3,14 +3,35 @@
   "nav": { "home": "Home", "skip": "Skip to content", "sections": "Guide sections" },
   "lang": { "switch": "العربية" },
   "home": {
-    "eyebrow": "Customer Service Guide",
+    "eyebrow": "Customer Service Guide · J&T Express Egypt",
     "title": "Every answer you need,",
     "titleAccent": "in one place",
     "subtitle": "A fast, precise guide for customer service and shippers: pick the right ticket type, handle financial inquiries, and run new-order procedures.",
-    "cta": "Start here",
+    "searchPlaceholder": "Search a ticket type or case…",
+    "cta": "Search",
+    "popular": "Most used:",
     "mascotHello": "Hi! I'm here to help 🚀",
     "mascotHint": "Tap the rabbit",
-    "explore": "Open section"
+    "explore": "Open section",
+    "chips": { "fast": "Fast to find", "precise": "Precise to pick" },
+    "sectionsEyebrow": "3 sections",
+    "sectionsLead": "Each section is organised so you reach what you need in seconds, then copy the ticket name or reply right away.",
+    "steps": {
+      "search": { "title": "Search", "body": "Press Ctrl + K anywhere and type a word from the customer's complaint." },
+      "choose": { "title": "Pick the right type", "body": "Read \"Choose it when\" and the note to make sure it's the right ticket." },
+      "copy": { "title": "Copy and act", "body": "Copy the ticket name in one click and open it in the system." }
+    }
+  },
+  "search": {
+    "title": "Search the guide",
+    "open": "Open search",
+    "short": "Search the guide…",
+    "placeholder": "Type a ticket name or part of the complaint…",
+    "loading": "Loading tickets…",
+    "empty": "No results. Try another word.",
+    "groups": { "sections": "Sections", "tickets": "Ticket types" },
+    "hintNavigate": "to navigate",
+    "hintOpen": "to open"
   },
   "sections": {
     "comingSoon": "Content is on its way… the rabbit is packing it 🐰",
@@ -41,6 +62,10 @@
     "clear": "Clear search",
     "loadError": "Couldn't load tickets. Check your connection and try again.",
     "mainType": "Main type",
+    "mainTypes": "Main types",
+    "totalTypes": "ticket types in the guide",
+    "cantFind": "Can't find the right ticket?",
+    "cantFindBody": "Search the whole guide with a word from the complaint.",
     "subtypesCount_one": "{{count}} sub-type",
     "subtypesCount_other": "{{count}} sub-types",
     "rules": "Must be true before opening any ticket in this category",
@@ -50,7 +75,7 @@
     "copied": "Copied"
   },
   "notFound": { "title": "Page not found", "back": "Back to home" },
-  "footer": { "rights": "All rights reserved" },
+  "footer": { "rights": "All rights reserved", "about": "The internal guide for the customer service team: tickets, financial inquiries and new orders." },
   "admin": {
     "badge": "Admin",
     "nav": "Admin menu",
