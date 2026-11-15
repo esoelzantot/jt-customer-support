@@ -2,6 +2,7 @@ import { Link, Outlet, ScrollRestoration } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Logo } from '@/components/brand/Logo'
 import { LanguageSwitch } from './LanguageSwitch'
+import { SectionNav } from './SectionNav'
 
 const YEAR = new Date().getFullYear()
 
@@ -22,10 +23,11 @@ export function RootLayout() {
           <Link to="/" aria-label={t('nav.home')} className="text-lg">
             <Logo />
           </Link>
+          <SectionNav className="hidden lg:block" />
           <div className="flex items-center gap-3">
             <a
               href="tel:15885"
-              className="hidden items-center gap-2 rounded-full bg-brand-600 px-4 py-1.5 text-sm font-bold text-white sm:inline-flex"
+              className="hidden items-center gap-2 rounded-full border-2 border-brand-600 px-4 py-1 text-sm font-bold text-brand-700 transition hover:bg-brand-600 hover:text-white xl:inline-flex"
             >
               <span>{t('brand.hotline')}</span>
               <span dir="ltr" className="text-display not-italic">15885</span>
@@ -33,6 +35,7 @@ export function RootLayout() {
             <LanguageSwitch />
           </div>
         </div>
+        <SectionNav className="-mt-1 overflow-x-auto px-3 pb-2 [scrollbar-width:none] lg:hidden" />
       </header>
 
       <main id="main" className="flex-1">

@@ -1,6 +1,8 @@
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { Mascot } from '@/components/brand/Mascot'
+import { SectionCard } from '@/features/guides/SectionCard'
+import { GUIDE_SECTIONS } from '@/features/guides/sections'
 
 const reveal = {
   hidden: { opacity: 0, y: 24 },
@@ -59,14 +61,14 @@ export function HomePage() {
           </motion.p>
 
           <motion.div variants={reveal} initial="hidden" animate="show" custom={3} className="mt-8">
-            <motion.button
-              type="button"
+            <motion.a
+              href="#sections"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
-              className="rounded-full bg-brand-600 px-8 py-3.5 text-base font-extrabold text-white shadow-xl shadow-brand-600/30 transition-colors hover:bg-brand-700"
+              className="inline-block rounded-full bg-brand-600 px-8 py-3.5 text-base font-extrabold text-white shadow-xl shadow-brand-600/30 transition-colors hover:bg-brand-700"
             >
               {t('home.cta')}
-            </motion.button>
+            </motion.a>
           </motion.div>
         </div>
 
@@ -96,6 +98,15 @@ export function HomePage() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div id="sections" className="mx-auto max-w-7xl scroll-mt-28 px-4 py-16 sm:px-6 lg:py-20">
+        <h2 className="text-display text-center text-3xl text-ink sm:text-4xl">{t('nav.sections')}</h2>
+        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          {GUIDE_SECTIONS.map((section, i) => (
+            <SectionCard key={section.slug} section={section} index={i} />
+          ))}
+        </ul>
       </div>
     </section>
   )

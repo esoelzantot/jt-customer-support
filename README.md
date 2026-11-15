@@ -41,4 +41,25 @@ Arabic stays upright automatically).
 
 ## Firebase
 
-`firestore.rules` and `storage.rules` deny everything by default. Open each collection explicitly as features land.
+Collections: `ticketCategories`, `financialInquiries`, `newOrderProcedures` (public read, admin write) and
+`admins/{uid}` (admin flag). Anything else is denied. Storage is fully locked for now.
+
+Deploy rules with `firebase deploy --only firestore:rules`.
+
+### Admin dashboard (`/admin`)
+
+1. Firebase console → Authentication → enable **Email/Password** and add the admin user.
+2. Firestore → create document `admins/{that user's UID}` (any field, e.g. `name`).
+3. Sign in at `/admin/login`.
+
+Admins can add, edit, delete and drag-to-reorder content in every section. Arabic is required; English is optional per field.
+
+### Local emulators
+
+Requires **Java 21+**. Set `VITE_USE_FIREBASE_EMULATORS=true` with a `demo-*` project id in `.env.local`, then:
+
+```bash
+npm run emulators        # terminal 1
+npm run seed:emulator    # terminal 2: creates a test admin + a non-admin user (see scripts/seed-emulator.mjs)
+npm run dev
+```

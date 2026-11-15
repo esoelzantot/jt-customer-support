@@ -1,8 +1,46 @@
 rules_version = '2';
 
-// Locked down by default. Open each collection explicitly as features land.
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Admins are granted by creating `admins/{uid}` from the Firebase console.
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function hasArabicTitle(data) {
+      return data.title is map && data.title.ar is string && data.title.ar.size() > 0
+        && data.order is number;
+    }
+
+    // A user may only check their own admin flag; nobody writes it from the client.
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Guide content: readable by everyone, writable by admins only.
+    match /ticketCategories/{id} {
+      allow read: if true;
+      allow create, update: if isAdmin() && hasArabicTitle(request.resource.data);
+      allow delete: if isAdmin();
+    }
+    match /financialInquiries/{id} {
+      allow read: if true;
+      allow create, update: if isAdmin() && hasArabicTitle(request.resource.data);
+      allow delete: if isAdmin();
+    }
+    match /newOrderProcedures/{id} {
+      allow read: if true;
+      allow create, update: if isAdmin() && hasArabicTitle(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Everything else stays locked.
     match /{document=**} {
       allow read, write: if false;
     }

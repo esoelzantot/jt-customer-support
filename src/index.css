@@ -55,6 +55,28 @@
   }
 }
 
+/* Form control base used across admin forms. */
+@utility field {
+  display: block;
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 2px solid rgb(26 18 20 / 0.1);
+  background: #fff;
+  padding: 0.625rem 0.875rem;
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color 150ms, box-shadow 150ms;
+  &::placeholder {
+    color: rgb(26 18 20 / 0.35);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-brand-600);
+    box-shadow: 0 0 0 4px rgb(229 30 37 / 0.12);
+  }
+}
+
 /* Heavy italic wordmark style, matching the J&T logotype (Latin only). */
 @utility text-display {
   font-family: var(--font-display);

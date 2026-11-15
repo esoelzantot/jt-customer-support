@@ -1,16 +1,120 @@
 {
   "brand": { "tagline": "Speed · Precision", "hotline": "Hotline" },
-  "nav": { "home": "Home", "skip": "Skip to content" },
+  "nav": { "home": "Home", "skip": "Skip to content", "sections": "Guide sections" },
   "lang": { "switch": "العربية" },
   "home": {
-    "eyebrow": "J&T Express Egypt",
-    "title": "Your parcel, in hands that are",
-    "titleAccent": "fast & precise",
-    "subtitle": "A new platform is on its way. The rabbit is ready to run — the full idea lands soon.",
-    "cta": "Get started",
-    "mascotHello": "Hi! Ready to deliver 🚀",
-    "mascotHint": "Tap the rabbit"
+    "eyebrow": "Customer Service Guide",
+    "title": "Every answer you need,",
+    "titleAccent": "in one place",
+    "subtitle": "A fast, precise guide for customer service and shippers: pick the right ticket type, handle financial inquiries, and run new-order procedures.",
+    "cta": "Start here",
+    "mascotHello": "Hi! I'm here to help 🚀",
+    "mascotHint": "Tap the rabbit",
+    "explore": "Open section"
+  },
+  "sections": {
+    "comingSoon": "Content is on its way… the rabbit is packing it 🐰",
+    "tickets": {
+      "title": "Tickets",
+      "short": "Main types, sub-types and when to use each",
+      "description": "Every main ticket type with its explanation, its sub-types, when to choose each one, and the notes that matter."
+    },
+    "financial": {
+      "title": "Financial Inquiries",
+      "short": "Details, employee actions and the customer reply",
+      "description": "Each financial inquiry with its details, what the employee must do, and a ready reply for the customer."
+    },
+    "newOrder": {
+      "title": "New Orders",
+      "short": "Procedures and customer requirements",
+      "description": "Step-by-step new-order procedures and the data and documents required from the customer."
+    }
   },
   "notFound": { "title": "Page not found", "back": "Back to home" },
-  "footer": { "rights": "All rights reserved" }
+  "footer": { "rights": "All rights reserved" },
+  "admin": {
+    "badge": "Admin",
+    "nav": "Admin menu",
+    "viewSite": "View site",
+    "signOut": "Sign out",
+    "add": "Add new",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "login": {
+      "title": "Admin sign in",
+      "subtitle": "Sign in with an admin account to manage guide content.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "pending": "Signing in…",
+      "error": "Incorrect email or password."
+    },
+    "notAdmin": {
+      "title": "Not an admin account",
+      "body": "{{email}} doesn't have dashboard access. Ask an administrator to add you."
+    },
+    "dashboard": {
+      "title": "Overview",
+      "welcome": "Hi {{email}}, pick a section to manage its content."
+    },
+    "list": {
+      "hint": "Drag the handle to reorder. Users see items in this order.",
+      "empty": "No content yet. Press \"Add new\" to start.",
+      "drag": "Drag to reorder"
+    },
+    "meta": {
+      "subtypes_one": "{{count}} sub-type",
+      "subtypes_other": "{{count}} sub-types",
+      "actions_one": "{{count}} employee action",
+      "actions_other": "{{count}} employee actions",
+      "steps_one": "{{count}} step · {{req}} requirements",
+      "steps_other": "{{count}} steps · {{req}} requirements"
+    },
+    "editor": {
+      "newTitle": "New",
+      "editTitle": "Edit",
+      "save": "Save",
+      "saving": "Saving…",
+      "titleRequired": "Arabic title is required.",
+      "discard": "You have unsaved changes. Close without saving?"
+    },
+    "fields": {
+      "arabic": "Arabic",
+      "addEn": "+ Add English translation",
+      "removeEn": "Remove English translation",
+      "icon": "Icon",
+      "iconHint": "Emoji (optional)",
+      "title": "Title",
+      "description": "Description",
+      "descriptionHint": "General explanation of the main type",
+      "subtypes": "Sub-types",
+      "newSubtype": "New sub-type",
+      "addSubtype": "Add sub-type",
+      "subtypeTitle": "Sub-type name",
+      "whenToUse": "Choose it when",
+      "note": "Note",
+      "details": "Inquiry details",
+      "employeeActions": "Employee actions",
+      "addAction": "Add action",
+      "customerReply": "Customer reply",
+      "customerReplyHint": "Shown to the agent with a copy button",
+      "summary": "Summary",
+      "steps": "Procedure steps",
+      "addStep": "Add step",
+      "requirements": "Customer requirements",
+      "addRequirement": "Add requirement",
+      "moveUp": "Move up",
+      "moveDown": "Move down"
+    },
+    "confirmDelete": {
+      "title": "Confirm delete",
+      "body": "\"{{name}}\" will be permanently deleted. This can't be undone."
+    },
+    "errors": {
+      "load": "Couldn't load data. Check your connection and permissions.",
+      "save": "Save failed. Please try again.",
+      "delete": "Delete failed. Please try again."
+    }
+  }
 }
