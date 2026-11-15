@@ -1,0 +1,82 @@
+@import 'tailwindcss';
+
+/*
+ * J&T Express design tokens.
+ * Brand red sampled from the official banner: #E51E25.
+ */
+@theme {
+  --color-brand-50: #fff1f1;
+  --color-brand-100: #ffdfe0;
+  --color-brand-200: #ffc5c7;
+  --color-brand-300: #ff9b9f;
+  --color-brand-400: #fb6168;
+  --color-brand-500: #f2333a;
+  --color-brand-600: #e51e25; /* primary */
+  --color-brand-700: #bd1218;
+  --color-brand-800: #9c1318;
+  --color-brand-900: #81171b;
+  --color-brand-950: #470609;
+
+  --color-ink: #1a1214;
+  --color-cream: #fff8f3;
+  --color-blush: #ffd6dc; /* mascot cheeks */
+  --color-denim: #6f8fc4; /* mascot jeans, sparing accent */
+
+  --font-sans: 'Cairo', 'Poppins', system-ui, sans-serif;
+  --font-display: 'Poppins', 'Cairo', system-ui, sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 28s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    min-height: 100dvh;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-600;
+  }
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+}
+
+/* Heavy italic wordmark style, matching the J&T logotype (Latin only). */
+@utility text-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  &:lang(ar) {
+    font-family: var(--font-sans);
+    font-style: normal;
+    letter-spacing: 0;
+  }
+}
+
+@utility bg-speed-lines {
+  background-image: repeating-linear-gradient(-12deg, transparent 0 22px, rgb(255 255 255 / 0.08) 22px 24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

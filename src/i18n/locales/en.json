@@ -1,0 +1,16 @@
+{
+  "brand": { "tagline": "Speed · Precision", "hotline": "Hotline" },
+  "nav": { "home": "Home", "skip": "Skip to content" },
+  "lang": { "switch": "العربية" },
+  "home": {
+    "eyebrow": "J&T Express Egypt",
+    "title": "Your parcel, in hands that are",
+    "titleAccent": "fast & precise",
+    "subtitle": "A new platform is on its way. The rabbit is ready to run — the full idea lands soon.",
+    "cta": "Get started",
+    "mascotHello": "Hi! Ready to deliver 🚀",
+    "mascotHint": "Tap the rabbit"
+  },
+  "notFound": { "title": "Page not found", "back": "Back to home" },
+  "footer": { "rights": "All rights reserved" }
+}
