@@ -31,6 +31,8 @@ export type TicketSubtype = {
 
 export type TicketCategory = BaseDoc & {
   description: LocalizedText
+  /** Conditions that apply to every sub-type in this category (e.g. Claims prerequisites). */
+  rules?: LocalizedText[]
   subtypes: TicketSubtype[]
 }
 

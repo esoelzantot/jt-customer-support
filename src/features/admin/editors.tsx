@@ -39,6 +39,14 @@ export function TicketEditor({ value, onChange }: EditorProps<GuideInput<TicketC
     <div className="space-y-6">
       <TitleRow value={value} onChange={onChange} />
       <LocalizedInput label={t('admin.fields.description')} hint={t('admin.fields.descriptionHint')} multiline rows={4} value={value.description} onChange={(description) => onChange({ ...value, description })} />
+      <LocalizedList
+        label={t('admin.fields.rules')}
+        hint={t('admin.fields.rulesHint')}
+        addLabel={t('admin.fields.addRule')}
+        items={value.rules ?? []}
+        onChange={(rules) => onChange({ ...value, rules })}
+      />
+      <p className="rounded-2xl bg-white p-3 text-xs leading-6 text-ink/60 ring-1 ring-brand-600/10">{t('admin.fields.formattingHint')}</p>
 
       <fieldset>
         <legend className="text-sm font-extrabold">{t('admin.fields.subtypes')}</legend>

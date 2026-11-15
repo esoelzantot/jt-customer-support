@@ -30,6 +30,25 @@
       "description": "Step-by-step new-order procedures and the data and documents required from the customer."
     }
   },
+  "tickets": {
+    "searchLabel": "Search ticket types",
+    "searchPlaceholder": "Search by ticket name or case… e.g. delay, SHEIN, address",
+    "filter": "Filter by main type",
+    "all": "All",
+    "results_one": "{{count}} ticket type",
+    "results_other": "{{count}} ticket types",
+    "noResults": "No ticket matches this search",
+    "clear": "Clear search",
+    "loadError": "Couldn't load tickets. Check your connection and try again.",
+    "mainType": "Main type",
+    "subtypesCount_one": "{{count}} sub-type",
+    "subtypesCount_other": "{{count}} sub-types",
+    "rules": "Must be true before opening any ticket in this category",
+    "whenToUse": "Choose it when",
+    "note": "Note",
+    "copy": "Copy name",
+    "copied": "Copied"
+  },
   "notFound": { "title": "Page not found", "back": "Back to home" },
   "footer": { "rights": "All rights reserved" },
   "admin": {
@@ -88,6 +107,10 @@
       "title": "Title",
       "description": "Description",
       "descriptionHint": "General explanation of the main type",
+      "rules": "Category rules",
+      "rulesHint": "Conditions that must hold before opening any sub-type ticket (optional)",
+      "addRule": "Add rule",
+      "formattingHint": "Formatting: start a line with \"• \" for a bullet, write \"condition ← outcome\" for a condition row, and [link text](https://…) for a link.",
       "subtypes": "Sub-types",
       "newSubtype": "New sub-type",
       "addSubtype": "Add sub-type",

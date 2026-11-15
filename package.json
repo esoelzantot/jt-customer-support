@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "emulators": "firebase emulators:start --project demo-jt-express",
     "seed:emulator": "node scripts/seed-emulator.mjs",
+    "import:content": "node --env-file-if-exists=.env.local scripts/import-content.mjs",
     "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
