@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import type { GuideInput } from '@/features/guides/guideApi'
-import type { FinancialInquiry, NewOrderProcedure, TicketCategory, TicketSubtype } from '@/features/guides/types'
+import type { CustomerReply, FinancialInquiry, NewOrderProcedure, TicketCategory, TicketSubtype } from '@/features/guides/types'
+import { useGuideCollection } from '@/features/guides/useGuideCollection'
 import { useLocalized } from '@/features/guides/useLocalized'
 import { IconButton, IconInput, LocalizedInput, LocalizedList } from './fields'
 import { emptyText } from './formModel'
@@ -99,7 +100,8 @@ export function FinancialEditor({ value, onChange }: EditorProps<GuideInput<Fina
   return (
     <div className="space-y-6">
       <TitleRow value={value} onChange={onChange} />
-      <LocalizedInput label={t('admin.fields.details')} multiline rows={4} value={value.details} onChange={(details) => onChange({ ...value, details })} />
+      <LocalizedInput label={t('admin.fields.group')} hint={t('admin.fields.groupHint')} value={value.group} onChange={(group) => onChange({ ...value, group })} />
+      <LocalizedInput label={t('admin.fields.details')} multiline rows={3} value={value.details} onChange={(details) => onChange({ ...value, details })} />
       <LocalizedList
         label={t('admin.fields.employeeActions')}
         addLabel={t('admin.fields.addAction')}
@@ -107,9 +109,86 @@ export function FinancialEditor({ value, onChange }: EditorProps<GuideInput<Fina
         items={value.employeeActions}
         onChange={(employeeActions) => onChange({ ...value, employeeActions })}
       />
-      <LocalizedInput label={t('admin.fields.customerReply')} hint={t('admin.fields.customerReplyHint')} multiline rows={5} value={value.customerReply} onChange={(customerReply) => onChange({ ...value, customerReply })} />
+      <RepliesField replies={value.replies ?? []} onChange={(replies) => onChange({ ...value, replies })} />
+      <RelatedTicketsField selected={value.relatedTickets ?? []} onChange={(relatedTickets) => onChange({ ...value, relatedTickets })} />
       <LocalizedInput label={t('admin.fields.note')} multiline rows={2} value={value.note} onChange={(note) => onChange({ ...value, note })} />
     </div>
+  )
+}
+
+function RepliesField({ replies, onChange }: { replies: CustomerReply[]; onChange: (r: CustomerReply[]) => void }) {
+  const { t } = useTranslation()
+  const update = (i: number, r: CustomerReply) => onChange(replies.map((x, j) => (j === i ? r : x)))
+  return (
+    <fieldset>
+      <legend className="text-sm font-extrabold">{t('admin.fields.customerReply')}</legend>
+      <p className="mt-0.5 text-xs text-ink-500">{t('admin.fields.repliesHint')}</p>
+      <div className="mt-3 space-y-4">
+        {replies.map((r, i) => (
+          <div key={i} className="rounded-2xl bg-white p-4 ring-1 ring-line">
+            <div className="mb-3 flex items-center gap-2">
+              <input
+                value={r.label ?? ''}
+                onChange={(e) => update(i, { ...r, label: e.target.value || undefined })}
+                placeholder={t('admin.fields.replyLabel')}
+                aria-label={t('admin.fields.replyLabel')}
+                dir="ltr"
+                className="field w-40 py-1.5 text-sm"
+              />
+              <span className="flex-1" />
+              {replies.length > 1 && (
+                <IconButton label={t('admin.delete')} onClick={() => onChange(replies.filter((_, j) => j !== i))}>×</IconButton>
+              )}
+            </div>
+            <LocalizedInput label={`${t('admin.fields.customerReply')} ${i + 1}`} multiline rows={3} value={r.text} onChange={(text) => update(i, { ...r, text })} className="[&>label]:sr-only" />
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => onChange([...replies, { text: emptyText() }])}
+        className="mt-3 rounded-full border-2 border-dashed border-brand-600/30 px-4 py-1.5 text-sm font-bold text-brand-700 hover:border-brand-600 hover:bg-brand-50"
+      >
+        + {t('admin.fields.addReplyVariant')}
+      </button>
+    </fieldset>
+  )
+}
+
+function RelatedTicketsField({ selected, onChange }: { selected: string[]; onChange: (ids: string[]) => void }) {
+  const { t } = useTranslation()
+  const l = useLocalized()
+  const { data } = useGuideCollection('ticketCategories')
+  const toggle = (id: string) => onChange(selected.includes(id) ? selected.filter((x) => x !== id) : [...selected, id])
+  return (
+    <fieldset>
+      <legend className="text-sm font-extrabold">{t('admin.fields.relatedTickets')}</legend>
+      <p className="mt-0.5 text-xs text-ink-500">{t('admin.fields.relatedTicketsHint')}</p>
+      <div className="mt-3 max-h-56 space-y-3 overflow-y-auto rounded-2xl bg-white p-3 ring-1 ring-line">
+        {data.map((c) => (
+          <div key={c.id}>
+            <p className="text-xs font-semibold text-ink-500" dir="auto">{c.icon} {l(c.title)}</p>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {c.subtypes.map((s) => {
+                const on = selected.includes(s.id)
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    aria-pressed={on}
+                    onClick={() => toggle(s.id)}
+                    dir="ltr"
+                    className={on ? 'rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold text-white' : 'rounded-full bg-cream px-3 py-1 text-xs font-semibold text-ink-700 hover:text-brand-700'}
+                  >
+                    {l(s.title)}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </fieldset>
   )
 }
 

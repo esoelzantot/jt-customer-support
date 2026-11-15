@@ -14,7 +14,7 @@ type Props = { open: boolean; initialQuery: string; onClose: () => void }
 
 type Result = {
   id: string
-  group: 'sections' | 'tickets'
+  group: 'sections' | 'tickets' | 'financial'
   title: string
   meta?: string
   icon: string | React.ReactNode
@@ -37,6 +37,7 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
   const [query, setQuery] = useState(initialQuery)
   const [active, setActive] = useState(0)
   const { status, data } = useGuideCollection('ticketCategories')
+  const { data: inquiries } = useGuideCollection('financialInquiries')
 
   const results = useMemo<Result[]>(() => {
     const sections: Result[] = GUIDE_SECTIONS.filter((s) => matches(`${t(`sections.${s.key}.title`)} ${t(`sections.${s.key}.short`)}`, query)).map((s) => ({
@@ -59,8 +60,18 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
           to: `/guides/tickets#${s.id}`,
         })),
     )
-    return [...sections, ...tickets.slice(0, query ? 40 : 8)]
-  }, [data, query, t, l])
+    const financial: Result[] = inquiries
+      .filter((q) => matches([q.title, q.group, q.details, ...q.employeeActions, ...(q.replies ?? []).map((r) => r.text)].map(both).join(' '), query))
+      .map((q) => ({
+        id: `financial-${q.id}`,
+        group: 'financial' as const,
+        title: l(q.title),
+        meta: l(q.details),
+        icon: q.icon ?? '💬',
+        to: `/guides/financial#${q.id}`,
+      }))
+    return [...sections, ...tickets.slice(0, query ? 40 : 6), ...financial.slice(0, query ? 20 : 4)]
+  }, [data, inquiries, query, t, l])
 
   const safeActive = Math.min(active, Math.max(results.length - 1, 0))
 

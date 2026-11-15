@@ -9,7 +9,7 @@ export function emptyInput(collection: GuideCollection, order: number): GuideInp
     case 'ticketCategories':
       return { order, title: blank(), description: blank(), subtypes: [] }
     case 'financialInquiries':
-      return { order, title: blank(), details: blank(), employeeActions: [blank()], customerReply: blank() }
+      return { order, title: blank(), details: blank(), employeeActions: [blank()], replies: [{ text: blank() }] }
     case 'newOrderProcedures':
       return { order, title: blank(), steps: [blank()], requirements: [blank()] }
   }
@@ -61,7 +61,14 @@ export function ensureRequired(collection: GuideCollection, value: GuideInput): 
         subtypes: (list('subtypes') as Record<string, unknown>[]).map((s) => ({ ...s, whenToUse: (s.whenToUse as LocalizedText) ?? blank() })),
       } as GuideInput
     case 'financialInquiries':
-      return { ...value, details: text('details'), customerReply: text('customerReply'), employeeActions: list('employeeActions') } as GuideInput
+      return {
+        ...value,
+        details: text('details'),
+        employeeActions: list('employeeActions'),
+        // Drop replies whose text was left empty (normalize() turns it into undefined).
+        replies: (list('replies') as { label?: string; text?: LocalizedText }[]).filter((r) => r.text).map((r) => (r.label?.trim() ? { label: r.label.trim(), text: r.text } : { text: r.text })),
+        relatedTickets: list('relatedTickets'),
+      } as GuideInput
     case 'newOrderProcedures':
       return { ...value, steps: list('steps'), requirements: list('requirements') } as GuideInput
   }

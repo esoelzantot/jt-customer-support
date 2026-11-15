@@ -11,6 +11,7 @@ import { NotFoundPage } from './NotFoundPage'
 // Each section's view is its own chunk (and pulls Firestore in only when needed).
 const VIEWS: Partial<Record<GuideSection['key'], LazyExoticComponent<ComponentType>>> = {
   tickets: lazy(() => import('@/features/tickets/TicketsView')),
+  financial: lazy(() => import('@/features/financial/FinancialView')),
 }
 
 function ComingSoon() {

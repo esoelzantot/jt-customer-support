@@ -4,9 +4,10 @@
 //   Production: ADMIN_EMAIL=… ADMIN_PASSWORD=… npm run import:content
 //               (reads VITE_FIREBASE_API_KEY / VITE_FIREBASE_PROJECT_ID from .env.local;
 //                writes go through security rules as that admin user)
+import { financialInquiries } from './content/financial.mjs'
 import { ticketCategories } from './content/tickets.mjs'
 
-const COLLECTIONS = { ticketCategories }
+const COLLECTIONS = { ticketCategories, financialInquiries }
 
 const emulator = process.argv.includes('--emulator')
 const projectId = emulator ? 'demo-jt-express' : process.env.VITE_FIREBASE_PROJECT_ID

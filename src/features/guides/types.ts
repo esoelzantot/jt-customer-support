@@ -38,12 +38,20 @@ export type TicketCategory = BaseDoc & {
 
 /* ---------- 2. Financial inquiries ---------- */
 
+/** A ready-to-send reply. `label` distinguishes variants (e.g. "TEMU" / "SHEIN"). */
+export type CustomerReply = { label?: string; text: LocalizedText }
+
 export type FinancialInquiry = BaseDoc & {
+  /** Topic used to group inquiries in the list (e.g. "حساب مبلغ الجمارك"). */
+  group?: LocalizedText
+  /** The case: what the customer is asking or saying. */
   details: LocalizedText
   /** What the employee must do, in order. */
   employeeActions: LocalizedText[]
-  /** Ready-to-send reply to the customer (copyable). */
-  customerReply: LocalizedText
+  /** One reply, or several labelled variants. */
+  replies: CustomerReply[]
+  /** Ticket sub-type IDs the agent may need to open (links to the tickets guide). */
+  relatedTickets?: string[]
   note?: LocalizedText
 }
 
