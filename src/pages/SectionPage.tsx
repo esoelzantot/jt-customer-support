@@ -12,6 +12,7 @@ import { NotFoundPage } from './NotFoundPage'
 const VIEWS: Partial<Record<GuideSection['key'], LazyExoticComponent<ComponentType>>> = {
   tickets: lazy(() => import('@/features/tickets/TicketsView')),
   financial: lazy(() => import('@/features/financial/FinancialView')),
+  newOrder: lazy(() => import('@/features/new-order/NewOrderView')),
 }
 
 function ComingSoon() {

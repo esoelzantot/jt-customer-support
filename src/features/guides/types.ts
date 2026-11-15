@@ -57,13 +57,17 @@ export type FinancialInquiry = BaseDoc & {
 
 /* ---------- 3. New order ---------- */
 
+/** Interactive tool shown inside a new-order step. */
+export type NewOrderWidget = 'prohibited-items' | 'weight-calculator' | 'compensation' | 'order-channels' | 'terms'
+
 export type NewOrderProcedure = BaseDoc & {
   summary?: LocalizedText
-  /** Procedure steps, in order. */
+  /** What the agent does / explains, in order. */
   steps: LocalizedText[]
-  /** What the customer must provide. */
+  /** What to ask the customer for. */
   requirements: LocalizedText[]
   note?: LocalizedText
+  widget?: NewOrderWidget
 }
 
 export type GuideCollection = 'ticketCategories' | 'financialInquiries' | 'newOrderProcedures'

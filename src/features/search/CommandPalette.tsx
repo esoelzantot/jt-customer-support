@@ -8,13 +8,14 @@ import { isLatin, matches } from '@/features/guides/search'
 import type { LocalizedText } from '@/features/guides/types'
 import { useGuideCollection } from '@/features/guides/useGuideCollection'
 import { useLocalized } from '@/features/guides/useLocalized'
+import { checkItem } from '@/features/new-order/prohibited'
 import { Highlight } from '@/features/tickets/Highlight'
 
 type Props = { open: boolean; initialQuery: string; onClose: () => void }
 
 type Result = {
   id: string
-  group: 'sections' | 'tickets' | 'financial'
+  group: 'prohibited' | 'sections' | 'tickets' | 'financial' | 'newOrder'
   title: string
   meta?: string
   icon: string | React.ReactNode
@@ -38,6 +39,7 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
   const [active, setActive] = useState(0)
   const { status, data } = useGuideCollection('ticketCategories')
   const { data: inquiries } = useGuideCollection('financialInquiries')
+  const { data: orderSteps } = useGuideCollection('newOrderProcedures')
 
   const results = useMemo<Result[]>(() => {
     const sections: Result[] = GUIDE_SECTIONS.filter((s) => matches(`${t(`sections.${s.key}.title`)} ${t(`sections.${s.key}.short`)}`, query)).map((s) => ({
@@ -70,8 +72,33 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
         icon: q.icon ?? '💬',
         to: `/guides/financial#${q.id}`,
       }))
-    return [...sections, ...tickets.slice(0, query ? 40 : 6), ...financial.slice(0, query ? 20 : 4)]
-  }, [data, inquiries, query, t, l])
+    const steps: Result[] = orderSteps
+      .filter((s) => matches([s.title, s.summary, ...s.steps, ...s.requirements].map(both).join(' '), query))
+      .map((s) => ({
+        id: `step-${s.id}`,
+        group: 'newOrder' as const,
+        title: l(s.title),
+        meta: l(s.summary),
+        icon: s.icon ?? '📦',
+        to: `/guides/new-order#${s.id}`,
+      }))
+
+    // "Can I ship X?" — answer straight from the prohibited-items list.
+    const verdict = query.trim().length >= 2 ? checkItem(query) : null
+    const prohibited: Result[] =
+      verdict?.kind === 'prohibited'
+        ? verdict.hits.slice(0, 3).map(({ category, item }) => ({
+            id: `prohibited-${item.name}`,
+            group: 'prohibited' as const,
+            title: `⛔ ${item.name}`,
+            meta: `${t('search.prohibitedMeta')} · ${category.title}`,
+            icon: category.icon,
+            to: `/guides/new-order?check=${encodeURIComponent(query.trim())}#shipment-type`,
+          }))
+        : []
+
+    return [...prohibited, ...sections, ...tickets.slice(0, query ? 40 : 6), ...financial.slice(0, query ? 20 : 4), ...steps.slice(0, query ? 20 : 3)]
+  }, [data, inquiries, orderSteps, query, t, l])
 
   const safeActive = Math.min(active, Math.max(results.length - 1, 0))
 

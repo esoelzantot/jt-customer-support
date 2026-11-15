@@ -29,7 +29,8 @@
     "placeholder": "Type a ticket name or part of the complaint…",
     "loading": "Loading tickets…",
     "empty": "No results. Try another word.",
-    "groups": { "sections": "Sections", "tickets": "Ticket types", "financial": "Financial inquiries" },
+    "groups": { "prohibited": "Not shippable", "sections": "Sections", "tickets": "Ticket types", "financial": "Financial inquiries", "newOrder": "New order steps" },
+    "prohibitedMeta": "From the prohibited items list",
     "hintNavigate": "to navigate",
     "hintOpen": "to open"
   },
@@ -97,6 +98,82 @@
     "copyReply": "Copy reply",
     "prev": "Previous inquiry",
     "next": "Next inquiry"
+  },
+  "newOrder": {
+    "callFlow": "Call flow",
+    "stepOf": "Step {{n}} of {{total}}",
+    "ask": "Ask the customer for",
+    "do": "Do / explain",
+    "prev": "Back",
+    "doneNext": "Done, next step",
+    "finish": "Finish",
+    "finishedTitle": "Order ready! 🎉",
+    "finishedBody": "You've completed every new-order step. Remember to screenshot the order before Save.",
+    "newCall": "Start a new call",
+    "loadError": "Couldn't load the new-order steps. Check your connection and try again.",
+    "checker": {
+      "title": "Can this be shipped?",
+      "hint": "Type what the customer wants to ship and get an instant answer.",
+      "placeholder": "e.g. phone, perfume, clothes…",
+      "prohibited": "Not shippable",
+      "fragile": "Rejected if fragile",
+      "allowed": "Allowed",
+      "notListed": "Not on the prohibited list",
+      "notListedBody": "It isn't a prohibited item. Continue, and make sure the packaging is suitable and not fragile.",
+      "generalRule": "General rule",
+      "fullList": "Prohibited & rejected items"
+    },
+    "calc": {
+      "title": "Weight calculator",
+      "packaging": "Packaging",
+      "box": "Box",
+      "bag": "Bag",
+      "dimsHintBox": "Enter the box dimensions in centimetres.",
+      "dimsHintBag": "If it has dimensions even without a box, enter them; otherwise just the actual weight.",
+      "length": "Length",
+      "width": "Width",
+      "height": "Height",
+      "actual": "Actual weight",
+      "actualShort": "Actual weight",
+      "volumetric": "Volumetric weight",
+      "chargeable": "Chargeable weight",
+      "basis": { "volumetric": "By dimensions (larger)", "actual": "By actual weight (larger)" },
+      "howTitle": "How was it calculated?",
+      "howVolume": "Length × width × height",
+      "howDivide": "Divide by {{d}} = volumetric weight",
+      "howCompare": "Take the larger of volumetric and actual",
+      "explain": {
+        "volumetric": "Volumetric ({{v}} kg) is more than actual ({{a}} kg), so shipping is charged on {{c}} kg.",
+        "actual": "Actual ({{a}} kg) is more than volumetric ({{v}} kg), so shipping is charged on {{c}} kg."
+      },
+      "ruleSide": "Each side ≤ {{max}} cm",
+      "ruleActual": "Actual weight ≤ {{max}} kg",
+      "ruleVolumetric": "Volumetric weight ≤ {{max}} kg",
+      "ok": "Within the allowed limits ✓",
+      "notOk": "Over the allowed limits; it can't be shipped like this."
+    },
+    "comp": {
+      "title": "Compensation calculator",
+      "fee": "Shipping fee (EGP)",
+      "value": "Shipment value (EGP)",
+      "optional": "Optional",
+      "damaged": "Damaged",
+      "lost": "Lost",
+      "damagedRule": "{{x}}× shipping fee, max {{cap}} EGP · report within {{days}} days of receipt",
+      "lostRule": "{{x}}× shipping fee, max {{cap}} EGP · report within {{days}} days of the shipment date"
+    },
+    "channels": {
+      "ask": "Ask which option suits the customer:",
+      "agent": { "title": "Through us", "body": "We create the order with the customer on the call." },
+      "app": { "title": "J&T app", "body": "The customer places the order in the app." },
+      "branch": { "title": "Nearest branch", "body": "The sender visits the nearest branch to place it." },
+      "agentNext": "Great, continue to the order data step.",
+      "goToData": "Order data"
+    },
+    "terms": {
+      "points_one": "{{count}} point",
+      "points_other": "{{count}} points"
+    }
   },
   "notFound": { "title": "Page not found", "back": "Back to home" },
   "footer": { "rights": "All rights reserved", "about": "The internal guide for the customer service team: tickets, financial inquiries and new orders." },
