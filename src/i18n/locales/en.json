@@ -176,7 +176,7 @@
     }
   },
   "notFound": { "title": "Page not found", "back": "Back to home" },
-  "footer": { "rights": "All rights reserved", "about": "The internal guide for the customer service team: tickets, financial inquiries and new orders." },
+  "footer": { "rights": "All rights reserved", "credit": "Designed & built by", "about": "The internal guide for the customer service team: tickets, financial inquiries and new orders." },
   "admin": {
     "badge": "Admin",
     "nav": "Admin menu",

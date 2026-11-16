@@ -86,10 +86,18 @@ export function RootLayout() {
             </a>
           </div>
         </div>
-        <div className="relative border-t border-white/15">
-          <p className="mx-auto max-w-7xl px-4 py-5 text-sm text-white/70 sm:px-6">
-            © {YEAR} J&amp;T Express · {t('footer.rights')}
-          </p>
+        <div className="relative bg-brand-50">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-4 text-sm text-ink-500 sm:flex-row sm:px-6">
+            <p>
+              © <span dir="ltr">{YEAR}</span> J&amp;T Express. {t('footer.rights')}.
+            </p>
+            <p>
+              {t('footer.credit')}{' '}
+              <span dir="ltr" lang="en" className="font-bold text-brand-700">
+                Eng. Eslam Shaker
+              </span>
+            </p>
+          </div>
         </div>
       </footer>
 
