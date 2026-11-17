@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "jtcustomer-guides.vercel.app" }],
       "destination": "https://jtexpress-support.vercel.app/",
       "permanent": true
