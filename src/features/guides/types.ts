@@ -21,12 +21,20 @@ type BaseDoc = {
 
 /* ---------- 1. Tickets ---------- */
 
+/** Where a ticket goes after it's opened. */
+export type TicketRouting = 'internal' | 'hq' | 'hq-or-internal'
+export const TICKET_ROUTINGS: TicketRouting[] = ['internal', 'hq', 'hq-or-internal']
+
 export type TicketSubtype = {
   id: string
+  /** System name (usually English), copied by agents. */
   title: LocalizedText
+  /** Plain-language name shown under the system name (e.g. "استفسار عن الشحنة"). */
+  subtitle?: LocalizedText
   /** In which situation the agent should choose this subtype. */
   whenToUse: LocalizedText
   note?: LocalizedText
+  routing?: TicketRouting
 }
 
 export type TicketCategory = BaseDoc & {

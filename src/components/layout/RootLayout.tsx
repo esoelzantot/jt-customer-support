@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { Logo } from '@/components/brand/Logo'
 import { SearchLauncher } from '@/features/search/SearchLauncher'
 import { GUIDE_SECTIONS } from '@/features/guides/sections'
-import { LanguageSwitch } from './LanguageSwitch'
 import { SearchButton } from './SearchButton'
 import { SectionNav } from './SectionNav'
 
@@ -46,9 +45,8 @@ export function RootLayout() {
             <Logo className="h-6 sm:h-7" />
           </Link>
           <SectionNav className="ms-4 hidden lg:block" />
-          <div className="ms-auto flex items-center gap-1.5">
-            <SearchButton />
-            <LanguageSwitch />
+          <div className="ms-auto flex min-w-0 flex-1 justify-end lg:ms-6">
+            <SearchButton className="w-full max-w-sm lg:max-w-md" />
           </div>
         </div>
         <SectionNav layoutKey="mobile" className="overflow-x-auto px-3 pb-2 [scrollbar-width:none] lg:hidden" />

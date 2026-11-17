@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import type { GuideInput } from '@/features/guides/guideApi'
-import type { CustomerReply, FinancialInquiry, NewOrderProcedure, TicketCategory, TicketSubtype } from '@/features/guides/types'
+import { TICKET_ROUTINGS, type CustomerReply, type FinancialInquiry, type NewOrderProcedure, type TicketCategory, type TicketSubtype } from '@/features/guides/types'
 import { useGuideCollection } from '@/features/guides/useGuideCollection'
 import { useLocalized } from '@/features/guides/useLocalized'
 import { IconButton, IconInput, LocalizedInput, LocalizedList } from './fields'
@@ -74,6 +74,27 @@ export function TicketEditor({ value, onChange }: EditorProps<GuideInput<TicketC
                 </div>
                 <div className="space-y-4">
                   <LocalizedInput label={t('admin.fields.subtypeTitle')} required value={s.title} onChange={(title) => setSubtype(i, { ...s, title })} />
+                  <LocalizedInput label={t('admin.fields.subtypeSubtitle')} hint={t('admin.fields.subtypeSubtitleHint')} value={s.subtitle} onChange={(subtitle) => setSubtype(i, { ...s, subtitle })} />
+                  <div>
+                    <p className="text-sm font-extrabold">{t('admin.fields.routing')}</p>
+                    <div role="radiogroup" aria-label={t('admin.fields.routing')} className="mt-1.5 flex flex-wrap gap-1.5">
+                      {[undefined, ...TICKET_ROUTINGS].map((r) => {
+                        const on = s.routing === r
+                        return (
+                          <button
+                            key={r ?? 'none'}
+                            type="button"
+                            role="radio"
+                            aria-checked={on}
+                            onClick={() => setSubtype(i, { ...s, routing: r })}
+                            className={on ? 'rounded-full bg-ink px-3 py-1.5 text-xs font-semibold text-white' : 'rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-ink-700 ring-1 ring-line hover:ring-brand-200'}
+                          >
+                            {r ? t(`tickets.routing.${r}.title`) : t('admin.fields.routingNone')}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
                   <LocalizedInput label={t('admin.fields.whenToUse')} multiline value={s.whenToUse} onChange={(whenToUse) => setSubtype(i, { ...s, whenToUse })} />
                   <LocalizedInput label={t('admin.fields.note')} multiline rows={2} value={s.note} onChange={(note) => setSubtype(i, { ...s, note })} />
                 </div>

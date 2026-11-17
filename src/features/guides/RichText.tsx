@@ -1,22 +1,39 @@
 import { Fragment, type ReactNode } from 'react'
+import { Link } from 'react-router'
 import clsx from 'clsx'
 
 /**
  * Lightweight, safe rich text for guide content (no HTML injection):
  *   "• " / "* " / "- " at line start -> bullet
  *   "condition ← outcome"            -> condition/outcome row
- *   [label](https://…)               -> external link
- *   Latin runs (ticket names, SHEIN…) -> isolated so they don't scramble RTL text
+ *   [label](https://…)               -> external link (new tab)
+ *   [label](/guides/…)               -> link to another page of this app
  */
 
 const BULLET = /^\s*[•*-]\s+/
-const LINK = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
+const LINK = /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g
 
 function inline(text: string, keyPrefix: string): ReactNode[] {
   const out: ReactNode[] = []
   let last = 0
   for (const m of text.matchAll(LINK)) {
     if (m.index! > last) out.push(text.slice(last, m.index))
+    if (m[2].startsWith('/')) {
+      out.push(
+        <Link
+          key={`${keyPrefix}-l${m.index}`}
+          to={m[2]}
+          className="inline-flex items-center gap-1 rounded-md bg-brand-600/10 px-1.5 font-bold text-brand-700 underline-offset-2 hover:underline"
+        >
+          {m[1]}
+          <svg viewBox="0 0 24 24" className="size-3.5 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>,
+      )
+      last = m.index! + m[0].length
+      continue
+    }
     out.push(
       <a
         key={`${keyPrefix}-l${m.index}`}

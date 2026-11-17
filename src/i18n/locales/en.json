@@ -71,6 +71,12 @@
     "subtypesCount_other": "{{count}} sub-types",
     "rules": "Must be true before opening any ticket in this category",
     "whenToUse": "Choose it when",
+    "routing": {
+      "label": "Goes to",
+      "internal": { "title": "Closed by us", "hint": "The ticket is closed by our team, not escalated." },
+      "hq": { "title": "Escalated to HQ", "hint": "The ticket is opened to HQ." },
+      "hq-or-internal": { "title": "HQ or closed by us", "hint": "Close it yourself if solved; open it to HQ if it needs follow-up." }
+    },
     "note": "Note",
     "copy": "Copy name",
     "copied": "Copied"
@@ -241,6 +247,10 @@
       "newSubtype": "New sub-type",
       "addSubtype": "Add sub-type",
       "subtypeTitle": "Sub-type name",
+      "subtypeSubtitle": "Arabic name",
+      "subtypeSubtitleHint": "Shown under the ticket name (e.g. Shipment inquiry)",
+      "routing": "Goes to",
+      "routingNone": "Not set",
       "whenToUse": "Choose it when",
       "note": "Note",
       "details": "Inquiry details",

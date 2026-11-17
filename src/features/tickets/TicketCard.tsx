@@ -7,6 +7,7 @@ import { isLatin } from '@/features/guides/search'
 import type { TicketSubtype } from '@/features/guides/types'
 import { useLocalized } from '@/features/guides/useLocalized'
 import { Highlight } from './Highlight'
+import { RoutingBadge } from './RoutingBadge'
 
 type Props = { subtype: TicketSubtype; code: string; query: string; index: number; flash?: boolean }
 
@@ -75,13 +76,20 @@ export function TicketCard({ subtype, code, query, index, flash }: Props) {
 
       <div className="min-w-0 flex-1 border-s border-dashed border-line p-5 sm:p-6">
         <header className="flex items-start gap-3">
-          <h3
-            className={clsx('min-w-0 flex-1 text-xl leading-snug sm:text-[1.375rem]', latin ? 'text-display text-ink rtl:text-right' : 'font-bold')}
-            dir={latin ? 'ltr' : undefined}
-            lang={latin ? 'en' : undefined}
-          >
-            <Highlight text={title} query={query} />
-          </h3>
+          <div className="min-w-0 flex-1">
+            <h3
+              className={clsx('text-xl leading-snug sm:text-[1.375rem]', latin ? 'text-display text-ink rtl:text-right' : 'font-bold')}
+              dir={latin ? 'ltr' : undefined}
+              lang={latin ? 'en' : undefined}
+            >
+              <Highlight text={title} query={query} />
+            </h3>
+            {subtype.subtitle && (
+              <p className="mt-1 text-base font-semibold text-ink-500">
+                <Highlight text={l(subtype.subtitle)} query={query} />
+              </p>
+            )}
+          </div>
           <button
             type="button"
             onClick={copy}
@@ -96,6 +104,8 @@ export function TicketCard({ subtype, code, query, index, flash }: Props) {
             <span aria-live="polite" className="hidden sm:inline">{copied ? t('tickets.copied') : t('tickets.copy')}</span>
           </button>
         </header>
+
+        {subtype.routing && <RoutingBadge routing={subtype.routing} className="mt-4" />}
 
         <p className="mt-4 text-sm font-semibold text-brand-700">{t('tickets.whenToUse')}</p>
         <RichText text={l(subtype.whenToUse)} className="mt-2 text-[1.0625rem] leading-8 text-ink-700 sm:text-lg sm:leading-9" />

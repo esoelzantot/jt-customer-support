@@ -12,7 +12,7 @@ import { CategoryBlock } from './CategoryBlock'
 import { TicketsSidebar } from './TicketsSidebar'
 
 const both = (t?: LocalizedText) => (t ? `${t.ar} ${t.en ?? ''}` : '')
-const subtypeText = (s: TicketSubtype) => [s.title, s.whenToUse, s.note].map(both).join(' ')
+const subtypeText = (s: TicketSubtype) => [s.title, s.subtitle, s.whenToUse, s.note].map(both).join(' ')
 
 function Skeleton() {
   return (

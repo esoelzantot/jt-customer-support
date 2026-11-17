@@ -52,7 +52,7 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
     }))
     const tickets: Result[] = data.flatMap((c) =>
       c.subtypes
-        .filter((s) => matches(`${both(s.title)} ${both(s.whenToUse)} ${both(s.note)} ${both(c.title)}`, query))
+        .filter((s) => matches(`${both(s.title)} ${both(s.subtitle)} ${both(s.whenToUse)} ${both(s.note)} ${both(c.title)}`, query))
         .map((s) => ({
           id: `ticket-${s.id}`,
           group: 'tickets' as const,
