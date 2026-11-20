@@ -14,6 +14,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'guides/:section', element: <SectionPage /> },
+      { path: 'rates', lazy: async () => ({ Component: (await import('@/features/rates/RatesPage.tsx')).RatesPage }) },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

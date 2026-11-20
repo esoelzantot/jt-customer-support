@@ -27,6 +27,14 @@ export const CoinsIcon: IconComponent = (p) => (
   </svg>
 )
 
+export const CalculatorIcon: IconComponent = (p) => (
+  <svg {...base} {...p}>
+    <rect x="4" y="2.5" width="16" height="19" rx="3" />
+    <rect x="7.5" y="6" width="9" height="3.5" rx="1" />
+    <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01" strokeWidth="2.6" />
+  </svg>
+)
+
 export const BoxIcon: IconComponent = (p) => (
   <svg {...base} {...p}>
     <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z" />

@@ -8,6 +8,7 @@ import { isLatin, matches } from '@/features/guides/search'
 import type { LocalizedText } from '@/features/guides/types'
 import { useGuideCollection } from '@/features/guides/useGuideCollection'
 import { useLocalized } from '@/features/guides/useLocalized'
+import { CalculatorIcon } from '@/components/icons/GuideIcons'
 import { checkItem } from '@/features/new-order/prohibited'
 import { Highlight } from '@/features/tickets/Highlight'
 
@@ -50,6 +51,9 @@ function Palette({ initialQuery, onClose }: Omit<Props, 'open'>) {
       icon: <s.Icon className="size-5" />,
       to: `/guides/${s.slug}`,
     }))
+    if (matches(`${t('rates.title')} ${t('rates.searchKeywords')}`, query)) {
+      sections.push({ id: 'section-rates', group: 'sections', title: t('rates.title'), meta: t('rates.short'), icon: <CalculatorIcon className="size-5" />, to: '/rates' })
+    }
     const tickets: Result[] = data.flatMap((c) =>
       c.subtypes
         .filter((s) => matches(`${both(s.title)} ${both(s.subtitle)} ${both(s.whenToUse)} ${both(s.note)} ${both(c.title)}`, query))

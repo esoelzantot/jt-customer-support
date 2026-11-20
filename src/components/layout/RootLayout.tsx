@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 import { Logo } from '@/components/brand/Logo'
 import { SearchLauncher } from '@/features/search/SearchLauncher'
-import { GUIDE_SECTIONS } from '@/features/guides/sections'
+import { useNavItems } from './navItems'
 import { SearchButton } from './SearchButton'
 import { SectionNav } from './SectionNav'
 
@@ -24,6 +24,7 @@ function useScrolled(threshold = 8) {
 export function RootLayout() {
   const { t } = useTranslation()
   const scrolled = useScrolled()
+  const navItems = useNavItems()
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -67,11 +68,11 @@ export function RootLayout() {
           <nav aria-label={t('nav.sections')}>
             <p className="text-sm font-semibold text-white/70">{t('nav.sections')}</p>
             <ul className="mt-4 space-y-2.5">
-              {GUIDE_SECTIONS.map((s) => (
-                <li key={s.slug}>
-                  <Link to={`/guides/${s.slug}`} className="inline-flex items-center gap-2 font-semibold hover:underline">
-                    <s.Icon className="size-4" />
-                    {t(`sections.${s.key}.title`)}
+              {navItems.map(({ to, label, Icon }) => (
+                <li key={to}>
+                  <Link to={to} className="inline-flex items-center gap-2 font-semibold hover:underline">
+                    <Icon className="size-4" />
+                    {label}
                   </Link>
                 </li>
               ))}
